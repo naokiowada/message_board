@@ -29,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($form['password']) < 4) {
         $error['password'] = 'length';
     }
+
+    // 画像のチェック
+    $image = $_FILES['image'];
+    if ($image['name'] !== '' && $image['error'] === 0) {
+        // なんのタイプのファイルが追加されたのかがわかる
+        $type = mime_content_type($image['tmp_name']);
+        if ($type !== 'image/png' && $type !== 'image/jpeg') {
+            $error['image'] = 'type';
+        }
+    }
 }
 ?>
 
@@ -82,8 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <dt>写真など</dt>
                 <dd>
                     <input type="file" name="image" size="35" value=""/>
+                 <?php if (isset($error['image']) && $error['image'] === 'type'): ?>
                     <p class="error">* 写真などは「.png」または「.jpg」の画像を指定してください</p>
                     <p class="error">* 恐れ入りますが、画像を改めて指定してください</p>
+                    <?php endif; ?>
                 </dd>
             </dl>
             <div><input type="submit" value="入力内容を確認する"/></div>
