@@ -57,27 +57,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <dt>ニックネーム<span class="required">必須</span></dt>
                 <dd>
                     <input type="text" name="name" size="35" maxlength="255" value="<?php echo h($form['name']); ?>"/>
-                    <?php if (isset($error['name']) && $error['name'] === 'blank'): ?>
+                 <?php if (isset($error['name']) && $error['name'] === 'blank'): ?>
                     <p class="error">* ニックネームを入力してください</p>
-                    <?php endif; ?>
+                 <?php endif; ?>
 
                 </dd>
                 <dt>メールアドレス<span class="required">必須</span></dt>
                 <dd>
                     <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($form['email']); ?>"/>
-                    <?php if (isset($error['email']) && $error['email'] === 'blank'): ?>
+                 <?php if (isset($error['email']) && $error['email'] === 'blank'): ?>
                     <p class="error">* メールアドレスを入力してください</p>
-                    <?php endif; ?>
+                 <?php endif; ?>
                     <p class="error">* 指定されたメールアドレスはすでに登録されています</p>
                 <dt>パスワード<span class="required">必須</span></dt>
                 <dd>
                     <input type="password" name="password" size="10" maxlength="20" value="<?php echo h($form['password']); ?>"/>
-                    <?php if (isset($error['password']) && $error['password'] === 'blank'): ?>
+                 <?php if (isset($error['password']) && $error['password'] === 'blank'): ?>
                     <p class="error">* パスワードを入力してください</p>
-                    <?php endif; ?>
-                    <?php if (isset($error['password']) && $error['password'] === 'length'): ?>
+                 <?php endif; ?>
+                 <?php if (isset($error['password']) && $error['password'] === 'length'): ?>
                     <p class="error">* パスワードは4文字以上で入力してください</p>
-                    <?php endif; ?>
+                 <?php endif; ?>
                 </dd>
                 <dt>写真など</dt>
                 <dd>
