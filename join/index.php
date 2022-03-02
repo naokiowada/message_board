@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
     if ($form['password'] === '') {
         $error['password'] = 'blank';
+    } elseif (strlen($form['password']) < 4) {
+        $error['password'] = 'length';
     }
 }
 ?>
@@ -73,7 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if (isset($error['password']) && $error['password'] === 'blank'): ?>
                     <p class="error">* パスワードを入力してください</p>
                     <?php endif; ?>
+                    <?php if (isset($error['password']) && $error['password'] === 'length'): ?>
                     <p class="error">* パスワードは4文字以上で入力してください</p>
+                    <?php endif; ?>
                 </dd>
                 <dt>写真など</dt>
                 <dd>
