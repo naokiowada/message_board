@@ -1,6 +1,7 @@
 <?php
 $form = [
-    'name' => ''
+    'name' => '',
+    'email' => ''
 ];
 $error = [];
 
@@ -14,6 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
     if ($form['name'] === '') {
         $error['name'] = 'blank';
+    }
+
+    $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    if ($form['email'] === '') {
+        $error['email'] = 'blank';
     }
 }
 ?>
@@ -50,8 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </dd>
                 <dt>メールアドレス<span class="required">必須</span></dt>
                 <dd>
-                    <input type="text" name="email" size="35" maxlength="255" value=""/>
+                    <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($form['email']) ?>"/>
+                    <?php if (isset($error['email']) && $error['email'] === 'blank'): ?>
                     <p class="error">* メールアドレスを入力してください</p>
+                    <?php endif; ?>
                     <p class="error">* 指定されたメールアドレスはすでに登録されています</p>
                 <dt>パスワード<span class="required">必須</span></dt>
                 <dd>
