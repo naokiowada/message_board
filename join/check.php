@@ -2,14 +2,34 @@
 session_start();
 require('../library.php');
 
+// 入力なしにcheck.phpに入ろうとした場合、index.phpに戻す処理
 if (isset($_SESSION['form'])) {
 	$form = $_SESSION['form'];
 } else {
 	header('Location: index.php');
 	exit();
 }
+// データベース接続
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	$db = new mysqli('localhost', 'root', 'root', 'min_bbs');
+	if (!$db) {
+		die($db->error);
+	}
+	$stmt = $db->prepare('insert into members (name, email, password, picture) VALUES(?, ?, ?, ?)');
+	if (!$stmt) {
+		die($db->error);
+	}
+	// passwordを保護する
+	$password = password_hash($form['password'], PASSWORD_DEFAULT);
+	$stmt->bind_param('ssss', $form['name'], $form['email'], $password, $form['image']);
+	$success = $stmt->execute();
+	if (!$success) {
+		die($db->error);
+	}
 
-$form = $_SESSION['form'];
+	unset($_SESSION['form']);
+	header('Location: thanks.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
